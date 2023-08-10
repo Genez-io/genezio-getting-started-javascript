@@ -1,2 +1,3 @@
 client/src/sdk
+.DS_Store
 node_modules

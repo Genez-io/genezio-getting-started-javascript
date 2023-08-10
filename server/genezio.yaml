@@ -3,7 +3,7 @@ region: eu-central-1
 cloudProvider: genezio
 sdk:
   language: js
-  path: ../client/src/sdk
+  path: ../client/sdk
 scripts:
   preBackendDeploy: "npm install"
   preFrontendDeploy: "cd ../client && npm install && npm run build"
