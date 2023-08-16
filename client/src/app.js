@@ -1,6 +1,6 @@
 import { TaskService } from "./sdk/taskService.sdk.js";
 
-// We want to persist the todo lists accruoss page reloads.
+// We want to persist the todo lists across page reloads.
 // For this we use the localStorage API.
 // If the user has no token yet, we generate a random one.
 let token = localStorage.getItem("apiToken");
@@ -27,14 +27,11 @@ async function handleAdd() {
     }
 
     // create a new task with the title and the token from local storage using the SDK
-    TaskService.createTask(
-        token,
-        taskTitle
-    ).then((res) => {
-        if (res.success) {
-            // reload the page
-            location.reload();
-        }
+    TaskService.createTask(token, taskTitle).then((res) => {
+      if (res.success) {
+        // reload the page
+        location.reload();
+      }
     });
 }
 
@@ -46,40 +43,45 @@ document.getElementById("add-task-btn").addEventListener("click", async (e) => {
 
 // iterate over all tasks
 TaskService.getAllTasksByUser(token).then((res) => {
-    if (res.success) {
-        // iterate over all tasks
-        for (const task of res.tasks) {
-            // add it to the DOM as pure HTML to a div with id="tasks"
-            document.getElementById("tasks").innerHTML += `
-  <div class="mb-3">
-    <div class="d-flex align-items-center">
-      <input type="checkbox" ${task.solved ? "checked" : ""} class="task_checkbox" id=${task.id}>
+  if (res.success) {
+    // iterate over all tasks
+    for (const task of res.tasks) {
+      const taskContainer = document.getElementById('tasks');
+      const taskTitle = `<span>${task.title}</span>`;
+      // Check if the task link is present
+      const taskLink = task.url
+        ? `at <a href="${task.url}" target="_blank"> ${task.url}</a>`
+        : '';
 
-      <p class="mb-0" style="margin-right: auto; margin-left: 20px">
-        <span>${task.title}</span>
-        <a href="" target="_blank">link</a>
-      </p>
-    </div>
-  </div>
-  `;
-        }
+      // add the task to the DOM as pure HTML to a div with id="tasks"
+      taskContainer.innerHTML += `
+        <div class="mb-3">
+          <div class="d-flex align-items-center">
+              <input type="checkbox" ${
+                task.solved ? 'checked' : ''
+              } class="task_checkbox" id=${task.id}>
+              <p class="mb-0" style="margin-right: auto; margin-left: 20px">
+                ${taskTitle}
+                ${taskLink}
+              </p>
+          </div>
+        </div>
+       `;
     }
+  }
 
-    // add an event listener to all checkboxes
-    const checkboxes = document.getElementsByClassName("task_checkbox");
-    for (const checkbox of checkboxes) {
-        checkbox.addEventListener("change", async (e) => {
-            // get the id of the task
-            const id = e.target.id;
+  // add an event listener to all checkboxes
+  const checkboxes = document.getElementsByClassName('task_checkbox');
+  for (const checkbox of checkboxes) {
+    checkbox.addEventListener('change', async (e) => {
+      // get the id of the task
+      const id = e.target.id;
 
-            // get the task by id
-            const task = res.tasks.find((task) => task.id === id);
+      // get the task by id
+      const task = res.tasks.find((task) => task.id === id);
 
-            // update the task
-            await TaskService.updateTask(token, id,
-                task.title,
-                e.target.checked,
-            );
-        });
-    }
+      // update the task
+      await TaskService.updateTask(token, id, task.title, e.target.checked);
+    });
+  }
 });

@@ -1,5 +1,5 @@
-name: getting-started-genezio
-region: eu-central-1
+name: getting-started-genezio-javascript
+region: us-east-1
 cloudProvider: genezio
 sdk:
   language: js
@@ -9,7 +9,6 @@ scripts:
   preFrontendDeploy: cd ../client && npm install
 frontend:
   path: ../client/src
-  subdomain: lavender-able-haddock
 classes:
   - path: ./task.js
     type: jsonrpc
