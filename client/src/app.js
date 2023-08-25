@@ -1,5 +1,9 @@
 import { TaskService } from "./sdk/taskService.sdk.js";
 
+const DELETE_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#DC3545" class="bi bi-trash-fill" viewBox="0 0 16 16">
+<path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+</svg>`;
+
 // We want to persist the todo lists across page reloads.
 // For this we use the localStorage API.
 // If the user has no token yet, we generate a random one.
@@ -52,27 +56,26 @@ TaskService.getAllTasksByUser(token).then((res) => {
       const taskLink = task.url
         ? `at <a href="${task.url}" target="_blank"> ${task.url}</a>`
         : '';
+      const taskSolved = task.solved ? 'checked' : '';
 
-      // add the task to the DOM as pure HTML to a div with id="tasks"
+      // TODO - Genezio Challenge
+      // Implement the functionality for the delete button
+      // `onclick` should call the TaskServive.deleteTask(token, id) method from the generated SDK
+      const deleteButton = `<button class="btn" onclick="">${DELETE_ICON}</button>`
+
       taskContainer.innerHTML += `
         <div class="mb-3">
           <div class="d-flex align-items-center">
-              <input type="checkbox" ${task.solved ? 'checked' : ''
-        } class="task_checkbox" id=${task.id}>
-              <p class="mb-0" style="margin-right: auto; margin-left: 20px">
-                ${taskTitle}
-                ${taskLink}
-              </p>
+            <input type="checkbox" ${taskSolved} class="task_checkbox" id=${task.id}>
+            <p class="mb-0" style="margin-right: auto; margin-left: 20px">
+              ${taskTitle}
+              ${taskLink}
+            </p>
             <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Check out genezio challenge">
-              <button class="btn" onclick="TaskService.deleteTask('${token}', '${task.id}')">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#DC3545" class="bi bi-trash-fill" viewBox="0 0 16 16">
-                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
-              </svg>
-              </button>
+              ${deleteButton}
             </span>
-              </div>
-              </div>
-              `;
+          </div>
+        </div>`;
     }
   }
 

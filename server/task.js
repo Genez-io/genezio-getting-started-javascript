@@ -132,4 +132,19 @@ export class TaskService {
 
     return { success: true };
   }
+
+  /**
+   * TODO - Genezio Challenge
+   * Implement the following method that deletes a task for a giving user ID.
+   * Only authenticated users with a valid token can access this method.
+   *
+   * The method will be exported via SDK using genezio.
+   *
+   * @param {*} token The user's token.
+   * @param {*} title The tasktitle.
+   * @returns An object containing one property: { success: true }
+   */
+    async deleteTask(token, id) {
+      console.log(`Implement this method to delete a user's task with id ${id}`)
+    }
 }
