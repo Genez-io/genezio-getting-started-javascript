@@ -22,6 +22,16 @@ The application is built using:
 2. Navigate to the folder `cd ./genezio-getting-started-javascript/server`.
 3. Run `genezio deploy` to deploy both the backend and the frontend.
 
+## Genezio Challenge
+
+Because hands-on experience is the best way to understand a new tool, we are proposing to you a challenge.
+
+The TODO application is missing a vital feature - a delete functionality.
+
+Follow the comments in the code ([backend](https://github.com/Genez-io/genezio-getting-started-javascript/blob/main/server/task.js#L137), [frontend](https://github.com/Genez-io/genezio-getting-started-javascript/blob/main/client/src/app.js#L61)) to implement it yourself.
+
+Deploy it with `genezio deploy` and check it out live :D 
+
 ## Test the project locally
 
 ### Clone the repository
