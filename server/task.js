@@ -35,43 +35,39 @@ export class TaskService {
       return {
         id: task._id.toString(),
         title: task.title,
+        url: task.url,
         solved: task.solved,
-        token: task.token
-        };
+        token: task.token,
+      };
     });
 
     if (tasks.length === 0) {
       await TaskModel.create({
         token: token,
-        title: "Check the other example projects",
-        url: "https://github.com/Genez-io/genezio-examples"
-      })
+        title: 'Check our documentation',
+        url: 'https://genez.io/docs',
+      });
 
       await TaskModel.create({
         token: token,
-        title: "Check our documentation",
-        url: "https://docs.genez.io/genezio-documentation/"
-      })
+        title: 'Read technical articles on the genezio blog',
+        url: 'https://genez.io/blog',
+      });
 
       await TaskModel.create({
         token: token,
-        title: "Watch our Youtube tutorials",
-        url: "https://www.youtube.com/@genezio7235"
-      })
-
-      await TaskModel.create({
-        token: token,
-        title: "Read our technical articles on genezio blog",
-        url: "https://genez.io/blog/"
-      })
+        title: 'Check the other example projects',
+        url: 'https://github.com/genez-io/genezio-examples',
+      });
 
       const initTasks = (await TaskModel.find({ token: token })).map((task) => {
         return {
           id: task._id.toString(),
           title: task.title,
+          url: task.url,
           solved: task.solved,
-          token: task.token
-          };
+          token: task.token,
+        };
       });
 
       return { success: true, tasks: initTasks };
@@ -96,12 +92,18 @@ export class TaskService {
 
     const task = await TaskModel.create({
       title: title,
-      token: token
+      url: '',
+      token: token,
     });
 
     return {
       success: true,
-      task: { title: title, token: token.toString(), id: task._id.toString() }
+      task: {
+        title: title,
+        url: '',
+        token: token.toString(),
+        id: task._id.toString(),
+      },
     };
   }
 
@@ -127,25 +129,6 @@ export class TaskService {
         solved: solved
       }
     );
-
-    return { success: true };
-  }
-
-  /**
-   * Method that deletes a task for a giving user ID.
-   * Only authenticated users with a valid token can access this method.
-   *
-   * The method will be exported via SDK using genezio.
-   *
-   * @param {*} token The user's token.
-   * @param {*} title The tasktitle.
-   * @param {*} ownerId The owner's of the task ID.
-   * @returns An object containing one property: { success: true }
-   */
-  async deleteTask(token, id) {
-    console.log(`Delete task with id ${id} request received`)
-
-    await TaskModel.deleteOne({ token: token, _id: id });
 
     return { success: true };
   }

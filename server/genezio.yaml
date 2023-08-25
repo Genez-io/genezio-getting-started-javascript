@@ -1,14 +1,14 @@
-name: getting-started-genezio
-region: eu-central-1
+name: getting-started-genezio-javascript
+region: us-east-1
 cloudProvider: genezio
 sdk:
   language: js
   path: ../client/src/sdk
 scripts:
-  preBackendDeploy: "npm install"
-  preFrontendDeploy: "cd ../client && npm install && npm run build"
+  preBackendDeploy: npm install
+  preFrontendDeploy: cd ../client && npm install
 frontend:
-  path: ../client/build
+  path: ../client/src
 classes:
   - path: ./task.js
     type: jsonrpc
