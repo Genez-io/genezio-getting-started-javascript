@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "npx serve ./src",
+    "start": "npx serve ./dist",
+    "build": "webpack --mode production",
     "install-local-sdk": "npm link @genezio-sdk/getting-started-genezio-javascript_us-east-1",
     "install-prod-sdk": "npm install @genezio-sdk/getting-started-genezio-javascript_us-east-1@1.0.0-prod"
   },
@@ -13,5 +14,15 @@
   "dependencies": {
     "@genezio-sdk/getting-started-genezio-javascript_us-east-1": "^1.0.0-prod",
     "http-server": "^14.1.1"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^11.0.0",
+    "css-loader": "^6.8.1",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.3",
+    "style-loader": "^3.3.3",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
   }
 }

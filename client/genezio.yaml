@@ -1,6 +1,5 @@
 scripts:
-  preFrontendDeploy: npm run install-prod-sdk && npm install
+  preFrontendDeploy: npm run install-prod-sdk && npm run build
 frontend:
-  path: ./src
-  subdomain: green-promising-weasel
-packageManager: npm
+  path: ./dist
+
