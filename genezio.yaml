@@ -1,0 +1,8 @@
+name: getting-started-genezio-javascript
+region: us-east-1
+cloudProvider: genezio
+language: js
+packageManager: npm
+workspace:
+  backend: ./server
+  frontend: ./client
