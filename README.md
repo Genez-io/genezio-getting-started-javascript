@@ -6,7 +6,7 @@
 
 </div>
 
-## You can check a [demo getting-started app here](https://chocolate-experimental-guppy.app.genez.io).
+## You can check a [demo getting-started app here](https://great-purple-capybara.app.genez.io).
 
 This is an example of a TODO application that introduces you to the genezio flow.
 
