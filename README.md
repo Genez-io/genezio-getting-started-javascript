@@ -1,4 +1,4 @@
-# JavaScript - Getting Started
+# JavaScript - Getting Started Example
 
 <div>
 
@@ -6,7 +6,7 @@
 
 </div>
 
-## You can check a [demo getting-started app here](https://great-purple-capybara.app.genez.io).
+## You can check a [demo getting-started app here](https://great-purple-capybara.app.genez.io){:target="_blank"}.
 
 This is an example of a TODO application that introduces you to the genezio flow.
 
@@ -28,9 +28,9 @@ Because hands-on experience is the best way to understand a new tool, we are pro
 
 The TODO application is missing a vital feature - a delete functionality.
 
-Follow the comments in the code ([backend](https://github.com/Genez-io/genezio-getting-started-javascript/blob/main/server/task.js#L137), [frontend](https://github.com/Genez-io/genezio-getting-started-javascript/blob/main/client/src/app.js#L61)) to implement it yourself.
+Follow the comments in the code ([backend](https://github.com/Genez-io/genezio-getting-started-javascript/blob/main/server/task.js#L137){:target="_blank"}, [frontend](https://github.com/Genez-io/genezio-getting-started-javascript/blob/main/client/src/app.js#L61)){:target="_blank"} to implement it yourself.
 
-Deploy it with `genezio deploy` and check it out live :D 
+Deploy it with `genezio deploy` and check it out live :D
 
 ## Test the project locally
 
@@ -50,14 +50,14 @@ Run `npm install` in the `client/` folder to install the dependencies.
 
 Run `genezio local` in the `server/` folder - this will start a local backend server that you can use to test the backend methods.
 ```bash
-$ genezio local            
+$ genezio local
 Server listening on port 8083
 Your code was deployed and the SDK was successfully generated!
 Test your code at https://app.genez.io/test-interface/local?port=8083
 ```
 
 There are two ways of sending requests to the backend methods:
-1. Using the genezio test interface available at [https://app.genez.io/test-interface/local?port=8083](https://app.genez.io/test-interface/local?port=8083).
+1. Using the genezio test interface available at [https://app.genez.io/test-interface/local?port=8083](https://app.genez.io/test-interface/local?port=8083){:target="_blank"}.
 2. Using the frontend code. Head to the `client` folder and `npm start`. The frontend will be able to call the backend methods using an auto-generated SDK.
 
 ## Deploy the backend in the Genezio infrastructure
