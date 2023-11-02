@@ -20,5 +20,4 @@ jobs:
           genezio-version: latest
           token: ${{ secrets.GENEZIO_TOKEN }}
       - name: Deploy
-        working-directory: ./server
         run: genezio deploy

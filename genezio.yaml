@@ -7,7 +7,7 @@ scripts:
   preFrontendDeploy: npm run install-prod-sdk && npm install && npm run build
 frontend:
   path: ./client/dist
-  subdomain: blush-primary-pheasant
+  subdomain: great-purple-capybara
 packageManager: npm
 workspace:
   backend: ./server
