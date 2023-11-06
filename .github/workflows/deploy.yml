@@ -19,5 +19,9 @@ jobs:
         with:
           genezio-version: latest
           token: ${{ secrets.GENEZIO_TOKEN }}
+      - name: Workaround to maintain the same subdomain
+        uses: mikefarah/yq@master
+        with:
+          cmd: yq eval -i '.frontend.subdomain = "great-purple-capybara"' genezio.yaml
       - name: Deploy
         run: genezio deploy

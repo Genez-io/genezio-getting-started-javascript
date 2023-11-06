@@ -6,8 +6,7 @@ scripts:
   preBackendDeploy: npm install
   preFrontendDeploy: npm run install-prod-sdk && npm install && npm run build
 frontend:
-  path: ./client/dist
-  subdomain: great-purple-capybara
+  path: ./client/public
 packageManager: npm
 workspace:
   backend: ./server

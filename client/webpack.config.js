@@ -6,7 +6,7 @@ module.exports = {
   entry: './src/app.js', // Your entry point
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'), // Output directory
+    path: path.resolve(__dirname, 'public'), // Output directory
   },
   stats: {
     warnings: false, // Ignore warnings
@@ -37,7 +37,7 @@ module.exports = {
     }),
     new CopyWebpackPlugin({
         patterns: [
-          { from: 'src/public', to: 'public' },
+          { from: 'src/public', to: '.' },
         ],
     }),
   ],
