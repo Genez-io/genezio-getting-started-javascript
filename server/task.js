@@ -1,10 +1,12 @@
 import { mongoose } from "mongoose"
 import { MONGO_DB_URI } from "./helper"
 import { TaskModel } from "./models/task"
+import { GenezioDeploy } from "@genezio/types"
 
 /**
  * The Task server class that will be deployed on the genezio infrastructure.
  */
+@GenezioDeploy()
 export class TaskService {
   constructor() {
     mongoose.set('strictQuery', true);

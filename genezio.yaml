@@ -1,0 +1,13 @@
+name: getting-started-genezio-javascript
+region: us-east-1
+language: js
+cloudProvider: genezio
+scripts:
+  preBackendDeploy: npm install
+  preFrontendDeploy: npm run install-prod-sdk && npm install && npm run build
+frontend:
+  path: ./client/public
+packageManager: npm
+workspace:
+  backend: ./server
+  frontend: ./client
