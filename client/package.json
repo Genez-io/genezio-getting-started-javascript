@@ -4,9 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "npx serve ./public",
+    "start": "npm run build && npx serve ./public",
     "build": "webpack --mode production",
-    "install-local-sdk": "npm link @genezio-sdk/getting-started-genezio-javascript_us-east-1",
     "install-prod-sdk": "npm install @genezio-sdk/getting-started-genezio-javascript_us-east-1@1.0.0-prod"
   },
   "author": "",

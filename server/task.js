@@ -1,7 +1,10 @@
 import { mongoose } from "mongoose"
-import { MONGO_DB_URI } from "./helper"
 import { TaskModel } from "./models/task"
 import { GenezioDeploy } from "@genezio/types"
+
+const red_color = "\x1b[31m%s\x1b[0m";
+const missing_env_error =
+  "ERROR: Your MONGO_DB_URI environment variable is not properly set, go to https://genez.io/blog/how-to-add-a-mongodb-to-your-genezio-project/ to learn how to integrate your project with Mongo DB";
 
 /**
  * The Task server class that will be deployed on the genezio infrastructure.
@@ -17,7 +20,14 @@ export class TaskService {
    * Private method used to connect to the DB.
    */
   #connect() {
-    mongoose.connect(MONGO_DB_URI);
+    if (!process.env.MONGO_DB_URI) {
+      console.log(red_color, missing_env_error);
+      return;
+    }
+    mongoose.connect(process.env.MONGO_DB_URI || "").catch((err) => {
+      console.log(err);
+      throw err;
+    });
   }
 
   /**
@@ -31,48 +41,61 @@ export class TaskService {
    * @returns An object containing two properties: { success: true, tasks: tasks }
    */
   async getAllTasksByUser(token) {
+    if (!process.env.MONGO_DB_URI) {
+      console.log(red_color, missing_env_error);
+      return { success: false, err: missing_env_error };
+    }
     console.log(`Get all tasks by user request received with token ${token}`)
 
-    const tasks = (await TaskModel.find({ token: token })).map((task) => {
-      return {
-        id: task._id.toString(),
-        title: task.title,
-        url: task.url,
-        solved: task.solved,
-        token: task.token,
-      };
-    });
-
-    if (tasks.length === 0) {
-      await TaskModel.create({
-        token: token,
-        title: 'Check our documentation',
-        url: 'https://genez.io/docs',
-      });
-
-      await TaskModel.create({
-        token: token,
-        title: 'Read technical articles on the genezio blog',
-        url: 'https://genez.io/blog',
-      });
-
-      await TaskModel.create({
-        token: token,
-        title: 'Check the other example projects',
-        url: 'https://github.com/genez-io/genezio-examples',
-      });
-
-      const initTasks = (await TaskModel.find({ token: token })).map((task) => {
+    let tasks;
+    try {
+      tasks = (await TaskModel.find({ token: token })).map((task) => {
         return {
           id: task._id.toString(),
           title: task.title,
-          url: task.url,
           solved: task.solved,
           token: task.token,
         };
       });
+    } catch (error) {
+      return { success: false, err: error.toString() };
+    }
 
-      return { success: true, tasks: initTasks };
+    if (tasks.length === 0) {
+      try {
+        await TaskModel.create({
+          token: token,
+          title: "Check the other example projects",
+          url: "https://github.com/Genez-io/genezio-examples",
+        });
+
+        await TaskModel.create({
+          token: token,
+          title: "Check our documentation",
+          url: "https://docs.genez.io/genezio-documentation/",
+        });
+
+        await TaskModel.create({
+          token: token,
+          title: "Read our technical articles on genezio blog",
+          url: "https://genez.io/blog/",
+        });
+
+        const initTasks = (await TaskModel.find({ token: token })).map(
+          (task) => {
+            return {
+              id: task._id.toString(),
+              title: task.title,
+              solved: task.solved,
+              token: task.token,
+            };
+          }
+        );
+
+        return { success: true, tasks: initTasks };
+      } catch (error) {
+        return { success: false, err: err.toString() };
+      }
     }
 
     return { success: true, tasks: tasks };
@@ -90,6 +113,10 @@ export class TaskService {
    * @returns An object containing two properties: { success: true, tasks: tasks }
    */
   async createTask(token, title) {
+    if (!process.env.MONGO_DB_URI) {
+      console.log(red_color, missing_env_error);
+      return { success: false, err: missing_env_error };
+    }
     console.log(`Create task request received for user with ${token} with title ${title}`)
 
     const task = await TaskModel.create({
@@ -122,6 +149,10 @@ export class TaskService {
    * @returns An object containing two properties: { success: true }
    */
   async updateTask(token, id, title, solved) {
+    if (!process.env.MONGO_DB_URI) {
+      console.log(red_color, missing_env_error);
+      return { success: false, err: missing_env_error };
+    }
     console.log(`Update task request received with id ${id} with title ${title} and solved value ${solved}`)
 
     await TaskModel.updateOne(
@@ -147,6 +178,10 @@ export class TaskService {
    * @returns An object containing one property: { success: true }
    */
     async deleteTask(token, id) {
+      if (!process.env.MONGO_DB_URI) {
+        console.log(red_color, missing_env_error);
+        return { success: false, err: missing_env_error };
+      }
       console.log(`Implement this method to delete a user's task with id ${id}`)
     }
 }

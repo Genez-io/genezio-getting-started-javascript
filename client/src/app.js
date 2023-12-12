@@ -32,6 +32,14 @@ async function handleAdd() {
 
   // create a new task with the title and the token from local storage using the SDK
   TaskService.createTask(token, taskTitle).then((res) => {
+    if (!res.success) {
+      alert( `Unexpected error: ${
+        res.err
+          ? res.err
+          : "Please check the backend logs in the project dashboard - https://app.genez.io."
+      }`);
+      return;
+    }
     if (res.success) {
       // reload the page
       location.reload();
@@ -47,6 +55,14 @@ document.getElementById("add-task-btn").addEventListener("click", async (e) => {
 
 // iterate over all tasks
 TaskService.getAllTasksByUser(token).then((res) => {
+  if (!res.success) {
+    alert( `Unexpected error: ${
+      res.err
+        ? res.err
+        : "Please check the backend logs in the project dashboard - https://app.genez.io."
+    }`);
+    return;
+  }
   if (res.success) {
     // iterate over all tasks
     for (const task of res.tasks) {
@@ -91,7 +107,16 @@ TaskService.getAllTasksByUser(token).then((res) => {
       const task = res.tasks.find((task) => task.id === id);
 
       // update the task
-      await TaskService.updateTask(token, id, task.title, e.target.checked);
+      await TaskService.updateTask(token, id, task.title, e.target.checked).then((res) => {
+        if (!res.success) {
+          alert( `Unexpected error: ${
+            res.err
+              ? res.err
+              : "Please check the backend logs in the project dashboard - https://app.genez.io."
+          }`);
+          return;
+        }
+      });
     });
   }
 });
